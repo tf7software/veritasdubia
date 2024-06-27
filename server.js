@@ -4,7 +4,7 @@ const { GoogleGenerativeAI } = require('@google/generative-ai');
 require('dotenv').config();
 
 const app = express();
-const port = 3000;
+const port = 80;
 
 const genAI = new GoogleGenerativeAI(process.env.API_KEY);
 
