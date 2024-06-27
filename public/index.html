@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Veritas Dubia</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+        }
+        #fact {
+            font-size: 2rem;
+            text-align: center;
+        }
+        .loading {
+            font-size: 2rem;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            height: 1em;
+        }
+        .dot {
+            animation: bounce 1.2s infinite;
+            margin: 0 2px;
+            font-size: 2rem;
+        }
+        .dot:nth-child(1) {
+            animation-delay: 0s;
+        }
+        .dot:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+        .dot:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+        @keyframes bounce {
+            0%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-10px);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="fact">
+        <div class="loading">
+            <span class="dot">.</span>
+            <span class="dot">.</span>
+            <span class="dot">.</span>
+        </div>
+    </div>
+    <script>
+        async function fetchFakeFact() {
+            const response = await fetch('/fake-fact');
+            const data = await response.json();
+            return data.fakeFact;
+        }
+
+        function getRandomFont() {
+            const fonts = ['Arial', 'Verdana', 'Helvetica', 'Times New Roman', 'Georgia', 'Courier New', 'Brush Script MT'];
+            return fonts[Math.floor(Math.random() * fonts.length)];
+        }
+
+        async function displayFakeFact() {
+            const factElement = document.getElementById('fact');
+            const fakeFact = await fetchFakeFact();
+            factElement.textContent = fakeFact;
+            factElement.style.fontFamily = getRandomFont();
+        }
+
+        window.onload = displayFakeFact;
+    </script>
+</body>
+</html>
